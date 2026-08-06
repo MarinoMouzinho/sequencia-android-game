@@ -2,4 +2,20 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="tenopctwhite">#1AFFFFFF</color>
+    <color name="darkgray">#FF2B2B2B</color>
+    <color name="mediumgray">#FF515151</color>
+    <color name="mediumgray2">#FF3A3A3A</color>
+    <color name="fiftydarkgray">#802B2B2B</color>
+    <color name="lightgray">#FFD9D9D9</color>
+    <color name="green">#FF77BB41</color>
+    <color name="tenopctgreen">#1A77BB41</color>
+    <color name="lightgreen">#FFC4D5B6</color>
+    <color name="red">#FFD80101</color>
+    <color name="mediumred">#FFBB4141</color>
+    <color name="darkred">#FF770000</color>
+    <color name="darkyellow">#FFDAB512</color>
+    <color name="purple">#FF9747FF</color>
+    <color name="blue">#FF019FD8</color>
+    <color name="darkblue">#FF005377</color>
 </resources>

@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Sequencia Game</string>
+
+    <!-- Activity Inicial -->
+    <string name="title_game">Sequência</string>
+    <string name="new_game">Nova partida</string>
+    <string name="settings">Configurações</string>
+    <string name="exit">Sair</string>
+
+    <!-- Painel Perfil Jogador -->
+
+
+    <!-- Panel Configurações Jogo -->
+
+    <!-- Activity Jogo -->
+    <string name="play_card">Jogar</string>
+    <string name="give_up_round">Desistir</string>
+
 </resources>
