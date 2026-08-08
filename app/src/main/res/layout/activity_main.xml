@@ -5,15 +5,110 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/pattern_background"
     tools:context=".ui.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:padding="40dp"
+        >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeMinTextSize="12sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="@font/jaro"
+            android:shadowColor="@color/black"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:text="@string/title_game"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:typeface="normal"
+            app:autoSizeStepGranularity="2sp" />
+
+        <LinearLayout
+            android:id="@+id/gridButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintWidth_percent="0.85"
+            android:layout_marginTop="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:layout_marginBottom="20dp">
+
+                <Button
+                    android:id="@+id/btnNewGame"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:text="@string/new_game"
+                    android:textSize="16sp"
+                    android:textAllCaps="true"
+                    android:backgroundTint="@color/green"
+                    android:letterSpacing="0.1"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginEnd="8dp"
+                    app:shapeAppearanceOverlay="@style/button_menu"/>
+
+                <Button
+                    android:id="@+id/btnConfigGame"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/settings"
+                    android:textSize="24sp"
+                    android:backgroundTint="@color/darkyellow"
+                    android:textColor="#FFFFFF"
+                    app:shapeAppearanceOverlay="@style/button_menu"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnConfigProfile"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/profile"
+                android:letterSpacing="0.1"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:backgroundTint="@color/mediumgray"
+                android:textColor="#FFFFFF"
+                android:layout_marginBottom="20dp"
+                app:shapeAppearanceOverlay="@style/button_menu"/>
+
+            <Button
+                android:id="@+id/btnExit"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/exit"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:letterSpacing="0.1"
+                android:backgroundTint="@color/mediumred"
+                android:textColor="#FFFFFF"
+                app:shapeAppearanceOverlay="@style/button_menu"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

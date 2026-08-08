@@ -4,16 +4,47 @@
     <!-- Activity Inicial -->
     <string name="title_game">Sequência</string>
     <string name="new_game">Nova partida</string>
-    <string name="settings">Configurações</string>
+    <string name="settings">⚙</string>
+    <string name="profile">Perfil</string>
     <string name="exit">Sair</string>
 
     <!-- Painel Perfil Jogador -->
-
+    <string name="id_player">ID:</string>
+    <string name="statistics">Estatísticas Gerais</string>
+    <string name="played_games">Partidas Jogadas</string>
+    <string name="victories">Vitórias</string>
+    <string name="music_volume">Volume da Música</string>
 
     <!-- Panel Configurações Jogo -->
+    <string name="settings_title">Configurações da Partida</string>
+    <string name="settings_enemies">Adversários</string>
+    <string name="settings_rounds">Rounds</string>
+    <string name="settings_hand">Cartas na Mão</string>
+    <string name="settings_difficulty">Dificuldade</string>
+    <string name="settings_difficulty_easy">Fácil</string>
+    <string name="settings_difficulty_medium">Médio</string>
+    <string name="settings_difficulty_hard">Difícil</string>
+    <string name="settings_difficulty_mixed">Misto</string>
+    <string name="settings_special_cards">Cartas Especiais</string>
 
     <!-- Activity Jogo -->
-    <string name="play_card">Jogar</string>
-    <string name="give_up_round">Desistir</string>
+    <string name="action_play_card">Jogar</string>
+    <string name="action_give_up_round">Desistir</string>
+    <string name="text_end_turn">Rodada encerrada! Embaralhando cartas…</string>
+
+    <!--TODO: Configurar template das mensagens abaixo -->
+    <string name="rounds">Round X/Y</string>
+    <string name="text_action_played_card_number">Fulano jogou a carta X (Cor).</string>
+    <string name="text_action_played_card_skip">Fulano pulou a vez!</string>
+    <string name="text_action_played_card_reverse">Fulano trocou o sentido da partida!</string>
+    <string name="text_action_played_card_double">Fulano duplicou o numero atual!</string>
+    <string name="text_action_gave_up">Fulano desistiu da sequência! Acumulou X pontos.</string>
+    <string name="text_end_game">Fim de Jogo! Fulano ganhou com X pontos!</string>
+
+    <!-- Gerais -->
+    <string name="save_button">Salvar</string>
+    <string name="cancel_button">Cancelar</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
 
 </resources>

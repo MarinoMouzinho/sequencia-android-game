@@ -1,6 +1,7 @@
 package com.example.sequenciagame.ui
 
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,6 +19,20 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        findViewById<Button>(R.id.btnNewGame).setOnClickListener {
+            //TODO: Chamar Game Activity
+        }
 
+        findViewById<Button>(R.id.btnConfigGame).setOnClickListener {
+            // TODO: Chamar Modal Config Game
+        }
+
+        findViewById<Button>(R.id.btnConfigProfile).setOnClickListener {
+            // TODO: Chamar Modal Config Profile
+        }
+
+        findViewById<Button>(R.id.btnExit).setOnClickListener {
+            finish()
+        }
     }
 }

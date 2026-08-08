@@ -5,5 +5,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="button_menu">
+        <item name="cornerSize">25%</item>
+    </style>
+
     <style name="Theme.SequenciaGame" parent="Base.Theme.SequenciaGame" />
 </resources>
