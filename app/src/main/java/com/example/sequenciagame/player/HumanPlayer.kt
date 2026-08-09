@@ -1,15 +1,16 @@
 package com.example.sequenciagame.player
 
-import com.example.sequenciagame.model.Card
+import com.example.sequenciagame.model.Play
 
 class HumanPlayer(
     name: String
 ) : Player(name, true) {
 
-    override fun chooseCard(
-        validCards: List<Card>,
-        topCard: Card?
-    ): Card? = null
+    override fun choosePlay(
+        validPlays: List<Play>
+    ): Play? = null
 
-    override fun shouldDraw(validCards: List<Card>): Boolean = validCards.isEmpty()
+    override fun shouldDraw(
+        validPlays: List<Play>
+    ): Boolean = validPlays.isEmpty()
 }

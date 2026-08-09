@@ -2,13 +2,15 @@ package com.example.sequenciagame.model
 
 data class Card(
     val id : Int,
-    val number : Int,
-    val suit : Suit,
-    val imageRes : Int = 0
+    val cardType : CardType,
+    val number : Int? = null,
 ) {
+    fun isNumber() : Boolean = cardType == CardType.NUMBER
 
-    fun matches(other : Card) : Boolean = (this.number >= other.number)
+    fun isSpecial() : Boolean = cardType != CardType.NUMBER
 
-    fun isDouble(other : Card) : Boolean = (number == other.number)
+    fun canRepresentANumber(): Boolean = cardType == CardType.NUMBER || cardType == CardType.WILD
+
+    fun getBaseNumber():Int? = if(cardType == CardType.NUMBER) number else null
 
 }

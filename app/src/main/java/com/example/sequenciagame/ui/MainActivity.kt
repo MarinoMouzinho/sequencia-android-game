@@ -1,5 +1,6 @@
 package com.example.sequenciagame.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
@@ -20,7 +21,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnNewGame).setOnClickListener {
-            //TODO: Chamar Game Activity
+            //TODO: Otimizar abrir Game Activity
+            val intent = Intent(this, GameActivity::class.java)
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.btnConfigGame).setOnClickListener {

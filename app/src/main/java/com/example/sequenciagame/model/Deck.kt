@@ -1,7 +1,10 @@
 package com.example.sequenciagame.model
 
-class Deck {
+class Deck(
+    private val specialCards : Boolean = true
+) {
     private val _cards = mutableListOf<Card>()
+
     val cards: List<Card>
         get() = _cards.toList()
 
@@ -12,15 +15,37 @@ class Deck {
     fun reset() {
         _cards.clear()
         var id = 0
-        for (suit in Suit.entries) {
-            /* TODO: Atualizar para cartas reais
-                5× 2, 6× 3, 6× 4, 6× 5, 6× 6, 5× 7,
-                4× 8, 3× 9, 3× 10, 3× 11, 3× 12,
-                3× Wild, 2× Skip, 2× Reverse */
-            for (number in 1..13) {
-                _cards.add(Card(id++, number, suit))
+
+        if(specialCards){
+            repeat(2){
+                _cards.add(Card(id++, CardType.SKIP))
+                _cards.add(Card(id++, CardType.REVERSE))
+                _cards.add(Card(id++, CardType.PLUS_ONE))
             }
         }
+
+        repeat(3){
+            _cards.add(Card(id++, CardType.NUMBER,9))
+            _cards.add(Card(id++, CardType.NUMBER,10))
+            _cards.add(Card(id++, CardType.NUMBER,11))
+            _cards.add(Card(id++, CardType.NUMBER,12))
+            if(specialCards) _cards.add(Card(id++, CardType.WILD))
+        }
+        repeat(4){
+            _cards.add(Card(id++, CardType.NUMBER,8))
+        }
+        repeat(5){
+            _cards.add(Card(id++, CardType.NUMBER,1))
+            _cards.add(Card(id++, CardType.NUMBER,2))
+            _cards.add(Card(id++, CardType.NUMBER,7))
+        }
+        repeat(6){
+            _cards.add(Card(id++, CardType.NUMBER,3))
+            _cards.add(Card(id++, CardType.NUMBER,4))
+            _cards.add(Card(id++, CardType.NUMBER,5))
+            _cards.add(Card(id++, CardType.NUMBER,6))
+        }
+
         shuffle()
     }
 
@@ -32,6 +57,8 @@ class Deck {
         return if (_cards.isNotEmpty()) _cards.removeAt(0)
         else null
     }
+
+    fun size(): Int = _cards.size
 
     fun isEmpty(): Boolean = _cards.isEmpty()
 }

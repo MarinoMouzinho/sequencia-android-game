@@ -32,14 +32,14 @@
     <string name="action_give_up_round">Desistir</string>
     <string name="text_end_turn">Rodada encerrada! Embaralhando cartas…</string>
 
-    <!--TODO: Configurar template das mensagens abaixo -->
-    <string name="rounds">Round X/Y</string>
-    <string name="text_action_played_card_number">Fulano jogou a carta X (Cor).</string>
-    <string name="text_action_played_card_skip">Fulano pulou a vez!</string>
-    <string name="text_action_played_card_reverse">Fulano trocou o sentido da partida!</string>
-    <string name="text_action_played_card_double">Fulano duplicou o numero atual!</string>
-    <string name="text_action_gave_up">Fulano desistiu da sequência! Acumulou X pontos.</string>
-    <string name="text_end_game">Fim de Jogo! Fulano ganhou com X pontos!</string>
+
+    <string name="rounds">Round %d/%d</string>
+    <string name="text_action_played_card_number">%s jogou a carta %s.</string>
+    <string name="text_action_played_card_skip">%s pulou a vez!</string>
+    <string name="text_action_played_card_reverse">%s trocou o sentido da partida!</string>
+    <string name="text_action_played_card_double">%s duplicou o número atual!</string>
+    <string name="text_action_gave_up">%s desistiu da sequência! Acumulou %d pontos.</string>
+    <string name="text_end_game">Fim de Jogo! %s ganhou com %d pontos!</string>
 
     <!-- Gerais -->
     <string name="save_button">Salvar</string>
