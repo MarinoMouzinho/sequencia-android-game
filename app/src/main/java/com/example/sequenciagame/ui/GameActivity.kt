@@ -33,6 +33,7 @@ class GameActivity : AppCompatActivity() {
     private val selectedCards = mutableListOf<Card>()
     private var possiblePlays = emptyList<Play>()
     private var roundEndDialog: Dialog? = null
+    private var selectedWildValue: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,7 @@ class GameActivity : AppCompatActivity() {
         initializeViews()
         setupCards()
         observeViewModel()
+        updatePlayButton()
 
         viewModel.startNewGame()
     }
@@ -76,16 +78,7 @@ class GameActivity : AppCompatActivity() {
         cardAdapter = CardAdapter(
             cards = emptyList(),
             onCardClicked = { card ->
-                if (card.cardType == CardType.WILD) {
-                    showWildValueDialog(card)
-                } else {
-                    onCardClicked(card)
-//                    val play = Play(
-//                        cards = listOf(card)
-//                    )
-//
-//                    viewModel.onPlaySelected(play)
-                }
+                onCardClicked(card)
             }
         )
 
@@ -157,17 +150,36 @@ class GameActivity : AppCompatActivity() {
     private fun onCardClicked(card: Card) {
         if (selectedCards.contains(card)) {
             selectedCards.remove(card)
+
+            if (card.cardType == CardType.WILD) {
+                selectedWildValue = null
+
+                cardAdapter.setWildValue(card, null)
+            }
+
+            cardAdapter.setSelectedCards(selectedCards)
+            updatePlayButton()
+
             return
         }
 
         if (selectedCards.size >= 2) {
-            selectedCards.clear()
+            clearSelection()
+        }
+
+        if (card.cardType == CardType.WILD) {
+            showWildValueDialog(card)
+            updatePlayButton()
+            return
         }
 
         selectedCards.add(card)
+        cardAdapter.setSelectedCards(selectedCards)
+        updatePlayButton()
     }
 
     private fun executeSelectedPlay() {
+
         if (selectedCards.isEmpty()) {
             tvMessage.text = "Selecione uma carta."
             return
@@ -177,47 +189,47 @@ class GameActivity : AppCompatActivity() {
 
         if (play == null) {
             tvMessage.text =
-                "Essa combinação não é uma jogada válida." //TODO: Alterar para strings.xml
+                "Essa combinação não é uma jogada válida."
             return
         }
 
         selectedCards.clear()
-        cardAdapter.clearSelection()
+        selectedWildValue = null
 
+        cardAdapter.clearSelection()
+        clearSelection()
         viewModel.onPlaySelected(play)
     }
 
     private fun findMatchingPlay(
         cards: List<Card>
     ): Play? {
-
         return possiblePlays.firstOrNull { play ->
-            if (play.cards.size != cards.size) {
-                return@firstOrNull false
-            }
-
-            if (!play.cards.containsAll(cards)) {
-                return@firstOrNull false
-            }
+            if (play.cards.size != cards.size) return@firstOrNull false
+            if (!play.cards.containsAll(cards)) return@firstOrNull false
 
             if (play.containsWild()) {
+                if (selectedWildValue == null) return@firstOrNull false
 
-                val numberCard =
-                    cards.firstOrNull {
-                        it.cardType ==
-                                CardType.NUMBER
-                    }
+                val numberCard = cards.firstOrNull {
+                    it.cardType == CardType.NUMBER
+                }
 
                 if (numberCard != null) {
-                    return@firstOrNull play.wildValue == numberCard.number
+                    return@firstOrNull (
+                            selectedWildValue == numberCard.number &&
+                                    play.wildValue == selectedWildValue
+                            )
                 }
-            }
 
+                return@firstOrNull (play.wildValue == selectedWildValue)
+            }
             true
         }
     }
 
     private fun showWildValueDialog(wildCard: Card) {
+
         val dialog = Dialog(this)
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -245,20 +257,24 @@ class GameActivity : AppCompatActivity() {
         buttons.forEach { (buttonId, value) ->
             dialog.findViewById<Button>(buttonId)
                 .setOnClickListener {
-                    val play = Play(
-                        cards = listOf(wildCard),
-                        wildValue = value
-                    )
-
+                    selectedWildValue = value
+                    if (!selectedCards.contains(wildCard)) {
+                        selectedCards.add(wildCard)
+                    }
+                    cardAdapter.setWildValue(wildCard, selectedWildValue)
+                    cardAdapter.setSelectedCards(selectedCards)
+                    updatePlayButton()
                     dialog.dismiss()
-
-                    //onCardClicked(card)
-                    viewModel.onPlaySelected(play)
                 }
         }
 
         dialog.findViewById<Button>(R.id.btnCancelWild)
             .setOnClickListener {
+                selectedWildValue = null
+                selectedCards.remove(wildCard)
+                cardAdapter.setWildValue(wildCard, selectedWildValue)
+                cardAdapter.setSelectedCards(selectedCards)
+                updatePlayButton()
                 dialog.dismiss()
             }
 
@@ -345,4 +361,24 @@ class GameActivity : AppCompatActivity() {
 
         dialog.show()
     }
+
+    private fun clearSelection() {
+        selectedCards.clear()
+        selectedWildValue = null
+        cardAdapter.setSelectedCards(emptyList())
+        updatePlayButton()
+    }
+
+    private fun updatePlayButton() {
+        if (selectedCards.isEmpty()) {
+            btnPlay.isEnabled = false
+            btnPlay.backgroundTintList =
+                getColorStateList(R.color.mediumgray)
+        } else {
+            btnPlay.isEnabled = true
+            btnPlay.backgroundTintList =
+                getColorStateList(R.color.green)
+        }
+    }
+
 }
