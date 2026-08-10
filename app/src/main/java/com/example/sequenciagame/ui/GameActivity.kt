@@ -2,8 +2,11 @@ package com.example.sequenciagame.ui
 
 import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Window
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +21,7 @@ import com.example.sequenciagame.model.CardType
 import com.example.sequenciagame.model.GameStatus
 import com.example.sequenciagame.model.Play
 import com.example.sequenciagame.ui.adapters.CardAdapter
+import com.example.sequenciagame.ui.adapters.TableCardAdapter
 import com.example.sequenciagame.viewmodel.GameViewModel
 
 class GameActivity : AppCompatActivity() {
@@ -25,6 +29,8 @@ class GameActivity : AppCompatActivity() {
     private val viewModel: GameViewModel by viewModels()
 
     private lateinit var cardAdapter: CardAdapter
+    private lateinit var tableCardAdapter: TableCardAdapter
+    private lateinit var tableCardStack: FrameLayout
     private lateinit var tvTableValue: TextView
     private lateinit var tvMessage: TextView
     private lateinit var btnPlay: Button
@@ -47,6 +53,7 @@ class GameActivity : AppCompatActivity() {
 
         initializeViews()
         setupCards()
+        //setupTableCards()
         observeViewModel()
         updatePlayButton()
 
@@ -60,6 +67,8 @@ class GameActivity : AppCompatActivity() {
 
         btnSurrender = findViewById(R.id.btnSurrender)
         btnPlay = findViewById(R.id.btnPlay)
+
+        tableCardStack = findViewById(R.id.tableCardStack)
 
         btnPlay.setOnClickListener {
             executeSelectedPlay()
@@ -108,9 +117,12 @@ class GameActivity : AppCompatActivity() {
 
         //TODO: Alterar para string com placeholder
         viewModel.tableCards.observe(this) { cards ->
-            findViewById<TextView>(
-                R.id.tvTableCards
-            ).text = "Monte: ${cards.size} cartas"
+//            findViewById<TextView>(
+//                R.id.tvTableCards
+//            ).text = "Monte: ${cards.size} cartas"
+
+            //tableCardAdapter.updateCards(cards)
+            updateTableCardStack(cards)
         }
 
         viewModel.message.observe(this) { message ->
@@ -381,4 +393,107 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateTableCardStack(cards: List<Card>) {
+        tableCardStack.removeAllViews()
+
+        if (cards.isEmpty()) return
+        val visibleCards = cards.takeLast(3)
+        visibleCards.forEachIndexed { index, card ->
+            val cardView = layoutInflater.inflate(
+                R.layout.item_card,
+                tableCardStack,
+                false
+            )
+
+            val cardValue =
+                cardView.findViewById<TextView>(R.id.tvCardValue)
+            val cardType =
+                cardView.findViewById<TextView>(R.id.tvCardType)
+            val cardBackground =
+                cardView.findViewById<LinearLayout>(
+                    R.id.llCardBackground
+                )
+
+            when (card.cardType) {
+                CardType.NUMBER -> {
+                    cardValue.text =
+                        card.number?.toString() ?: "?"
+                    cardType.text = "NÚMERO"
+                    cardBackground.setBackgroundResource(
+                        R.drawable.red_card_bg
+                    )
+                }
+
+                CardType.WILD -> {
+                    cardValue.text =
+                        card.number?.toString() ?: "★"
+                    cardType.text = "CORINGA"
+                    cardBackground.setBackgroundResource(
+                        R.drawable.black_card_bg
+                    )
+                }
+
+                CardType.SKIP -> {
+                    cardValue.text = "⏭"
+                    cardType.text = "PULAR"
+
+                    cardBackground.setBackgroundResource(
+                        R.drawable.blue_card_bg
+                    )
+                }
+
+                CardType.REVERSE -> {
+                    cardValue.text = "↔"
+                    cardType.text = "INVERTER"
+                    cardBackground.setBackgroundResource(
+                        R.drawable.blue_card_bg
+                    )
+                }
+
+                CardType.PLUS_ONE -> {
+                    cardValue.text = "+1"
+                    cardType.text = "MAIS 1"
+                    cardBackground.setBackgroundResource(
+                        R.drawable.blue_card_bg
+                    )
+                }
+            }
+
+            val params = FrameLayout.LayoutParams(
+                dpToPx(72),
+                dpToPx(108)
+            )
+
+            params.gravity = Gravity.CENTER
+
+            when (index) {
+                0 -> {
+                    cardView.alpha = 0.10f
+                    cardView.rotation = -10f
+                    cardView.translationX = dpToPx(-8).toFloat()
+                    cardView.translationY = dpToPx(4).toFloat()
+                }
+
+                1 -> {
+                    cardView.alpha = 0.40f
+                    cardView.rotation = 8f
+                    cardView.translationX = dpToPx(6).toFloat()
+                    cardView.translationY = dpToPx(2).toFloat()
+                }
+
+                2 -> {
+                    cardView.alpha = 1.0f
+                    cardView.rotation = 0f
+                    cardView.translationX = 0f
+                    cardView.translationY = 0f
+                }
+            }
+
+            tableCardStack.addView(cardView, params)
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
 }
