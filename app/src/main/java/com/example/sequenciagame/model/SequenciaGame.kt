@@ -118,7 +118,7 @@ class SequenciaGame(
                 recordTurn(player, play)
                 refillHand(player)
                 nextPlayer()
-                nextPlayer()
+                //nextPlayer()
                 return true
             }
 
@@ -127,7 +127,7 @@ class SequenciaGame(
                 refillHand(player)
                 turnDirection *= -1
                 nextPlayer()
-                nextPlayer()
+                //nextPlayer()
                 return true
             }
 
